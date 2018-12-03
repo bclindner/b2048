@@ -1,4 +1,4 @@
-module github.com/bclindner/b2048
+module github.com/bclindner/b2048/v1.0.0
 
 require (
 	github.com/cosiner/argv v0.0.1 // indirect
