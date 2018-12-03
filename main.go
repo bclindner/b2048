@@ -16,21 +16,23 @@ func main() {
 	game := NewGame()
 Loop:
 	for {
+		score := 0
+		grid := GameGrid{}
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
 			switch ev.Key {
 			case termbox.KeyArrowUp:
-				game.Score += game.Grid.MergeUp()
+				grid, score = game.Grid.MergeUp()
 			case termbox.KeyArrowDown:
-				game.Score += game.Grid.MergeDown()
+				grid, score = game.Grid.MergeDown()
 			case termbox.KeyArrowLeft:
-				game.Score += game.Grid.MergeLeft()
+				grid, score = game.Grid.MergeLeft()
 			case termbox.KeyArrowRight:
-				game.Score += game.Grid.MergeRight()
+				grid, score = game.Grid.MergeRight()
 			case termbox.KeyCtrlC:
 				break Loop
 			}
 		}
-		game.Tick()
+		game.Tick(grid, score)
 	}
 }
