@@ -75,14 +75,36 @@ func (g *Game) Tick(grid GameGrid, score int) {
 		g.Score += score
 		err := g.Grid.AddNumber()
 		if err != nil {
-			termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
+			if g.IsOver() {
+				termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
+			}
 		}
-		g.Draw()
-	} else {
-		emptyspaces := g.Grid.GetEmptySpaces()
-		if len(emptyspaces) == 0 {
-			termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
-		}
-		g.Draw()
 	}
+	emptyspaces := g.Grid.GetEmptySpaces()
+	if len(emptyspaces) == 0 && g.IsOver() {
+		termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
+	}
+	g.Draw()
+}
+
+// IsOver checks if the game is in a failure state (read: the player has no more usable moves).
+func (g *Game) IsOver() bool {
+	// check for failure state
+	up, _ := g.Grid.MergeUp()
+	if g.Grid != up {
+		return false
+	}
+	down, _ := g.Grid.MergeDown()
+	if g.Grid != down {
+		return false
+	}
+	left, _ := g.Grid.MergeLeft()
+	if g.Grid != left {
+		return false
+	}
+	right, _ := g.Grid.MergeRight()
+	if g.Grid != right {
+		return false
+	}
+	return true
 }
