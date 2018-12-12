@@ -77,12 +77,14 @@ func (g *Game) Tick(grid GameGrid, score int) {
 		if err != nil {
 			if g.IsOver() {
 				termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
+				termprint(Point{0, 26}, "Press R to Restart", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
 			}
 		}
 	}
 	emptyspaces := g.Grid.GetEmptySpaces()
 	if len(emptyspaces) == 0 && g.IsOver() {
 		termprint(Point{0, 25}, "Game Over", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
+		termprint(Point{0, 26}, "Press R to Restart", termbox.ColorDefault|termbox.AttrBold, termbox.ColorDefault)
 	}
 	g.Draw()
 }

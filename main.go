@@ -37,6 +37,16 @@ Loop:
 			case termbox.KeyCtrlC:
 				break Loop
 			}
+			if !moved {
+				switch ev.Ch {
+				// r to restart (simply resets the game)
+				case 'r':
+					game = NewGame()
+				// q to quit
+				case 'q':
+					break Loop
+				}
+			}
 		}
 		if moved {
 			game.Tick(grid, score)
